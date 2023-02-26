@@ -19,7 +19,6 @@ setup(
                 'src/HuffmanCodec.cpp',
                 'src/JpegIO.cpp',
                 'src/JpegZigzag.cpp',
-                'src/JpegDCT.cpp',
                 'src/JpegColor.cpp',
                 'src/image.cpp',
                 '3rdparty/bitstr.cpp'
