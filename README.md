@@ -20,6 +20,10 @@ You are encouraged to test images with different quality and yuv format settings
 - Implement a simple JPEG encoder for fun, e.g., given a PNG image with size over **30MB**, 
 with your JPEG encoder, it can be compressed to no more than **1MB**. 
 
+## Remember clone this repo with recursive
+```
+git clone --recursive https://github.com/JosephChenHub/comp5425_assignment2_jpeg_encoder.git
+```
 
 ## Preparation for CPP users 
 We use ``cmake >= 3.13 " to build the project, actually you can use other compilers like Visual Studio, MingW, etc.
