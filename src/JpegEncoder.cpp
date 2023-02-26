@@ -9,7 +9,7 @@
 #include <iostream>
 #include <cmath>
 #include <stdexcept>
-
+#include <memory>
 
 
 void JpegEncoder::encodeRGB(const Image<uint8_t> &rgb,

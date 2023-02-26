@@ -12,6 +12,8 @@
 #include <cstdint>
 #include <vector>
 #include <utility>
+#include <algorithm>
+#include <cstring>
 
 
 #ifdef __cplusplus

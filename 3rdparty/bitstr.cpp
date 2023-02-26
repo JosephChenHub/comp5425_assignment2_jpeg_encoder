@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <cstdio>
+#include <cstdint>
 #include "bitstr.h"
 
 #define USE_JPEG_BITSTR 1
