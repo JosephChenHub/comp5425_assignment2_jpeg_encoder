@@ -42,6 +42,15 @@ usage example:
 ```
 This command will generate a JPEG image with quality 30 and YUV420 format. 
 
+Some APIs of **Image** class:
+```
+Image<uint8_t> img1("./data/sg_0.png"); // load an image from file, only for uint8_t type
+Image<uint8_t> img2 = img1; // copy 
+img2(0, 5, 2) = 10;  // assign the pixel value to 10 at location(y=0, x=5, c=2) 
+Image<float> img3;
+img3.copyFrom(img2); // uint8_t -> float copy
+```
+
 ## Preparation for Python users
 **Method 1 (via CMake)**
 
