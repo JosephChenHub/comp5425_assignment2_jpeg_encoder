@@ -51,6 +51,8 @@ Image<float> img3;
 img3.copyFrom(img2); // uint8_t -> float copy
 ```
 
+**TASK** : For cpp users, you are required to complete functions in `src/JpegEncoder.cpp`
+
 ## Preparation for Python users
 **Method 1 (via CMake)**
 
@@ -87,11 +89,9 @@ Then you can use the following APIs:
 ```
 python3 setup.py build 
 ```
-then add the './build/xxx' to your python environment, or install the package vai "python3 setup.py install"
+then add the './build/xxx' to your python environment, or install the package via "python3 setup.py install"
 
-
-
-
+**TASK** : For python users, you are required to complete functions in `python/jpeg_encoder.py`. 
 
 
 ## Reference materials:
