@@ -69,7 +69,7 @@ TEST_F(ImageTest, constructors) {
 
 TEST_F(ImageTest, read_from_file) {
   // from image file
-  Image<uint8_t> img("../../data/sg_0.png");
+  Image<uint8_t> img("./data/sg_0.png");
   ASSERT_EQ(img.rows(), 4000);
   ASSERT_EQ(img.cols(), 6000);
   ASSERT_EQ(img.channels(), 3);
