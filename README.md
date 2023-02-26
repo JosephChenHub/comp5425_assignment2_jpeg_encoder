@@ -8,6 +8,8 @@ Implement the following parts
 ![rgb_to_yuv](./data/rgb_yuv.jpg)
 - Sample image blocks, you are required to implement this method for **YUV 444**, **YUV 422**, and **YUV 420** 
 ![micro blocks](./data/mcu.jpg)
+For sub-sampling blocks, you can use `nearest` or `bilinear` interpolation (e.g., directly average a 2x2 area into a new pixel for YUV420).
+
 - DCT (you are not allowed to use external library such as cv2.dct)
 ![dct](./data/dct.jpg)
 the time complexity of the original dct is O(n^4), and there are many optimized tricks can be found online. 
