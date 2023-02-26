@@ -2,7 +2,7 @@
 This tutorial shows you how to implement a simple JPEG encoder (sequential mode) step by step. 
 ![JPEG pipeline](./data/jpeg_pipeline.png)
 
-## What you should do?
+## What should you do?
 Implement the following parts
 - RGB to YUV color transform
 ![rgb_to_yuv](./data/rgb_yuv.jpg)
@@ -15,7 +15,7 @@ the time complexity of the original dct is O(n^4), and there are many optimized 
 Once implemented the above functions, you can test the jpeg encoder with ``data/sg_0.png'' or other images.
 You are encouraged to test images with different quality and yuv format settings.
 
-## What you will have ?
+## What will you achieve ?
 - Learn the pipeline and details of a JPEG encoder
 - Implement a simple JPEG encoder for fun, e.g., given a PNG image with size over **30MB**, 
 with your JPEG encoder, it can be compressed to no more than **1MB**. 
