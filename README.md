@@ -1,11 +1,19 @@
 # Implement a JPEG Encoder (sequential mode) from scratch
 This tutorial shows you how to implement a simple JPEG encoder (sequential mode) step by step. 
+![JPEG pipeline](./data/jpeg_pipeline.png)
 
 ## What you should do?
 Implement the following parts
 - RGB to YUV color transform
+![rgb_to_yuv](./data/rgb_yuv.jpg)
 - Sample image blocks, you are required to implement this method for **YUV 444**, **YUV 422**, and **YUV 420** 
+![micro blocks](./data/mcu.jpg)
 - DCT (you are not allowed to use external library such as cv2.dct)
+![dct](./data/dct.jpg)
+the time complexity of the original dct is O(n^4), and there are many optimized tricks can be found online. 
+
+Once implemented the above functions, you can test the jpeg encoder with ``data/sg_0.png'' or other images.
+You are encouraged to test images with different quality and yuv format settings.
 
 ## What you will have ?
 - Learn the pipeline and details of a JPEG encoder
@@ -26,9 +34,9 @@ use **-DBUILD_TESTS=ON** to enable tests, **-DBUILD_PYTHON_MODULE=ON** to build 
 
 usage example:
 ```
-./build/jpeg_encoder -i ./data/sg_0.png -o ./data/sg_0_q50_444.jpg -q 50 -f 444
+./build/jpeg_encoder -i ./data/sg_0.png -o ./data/sg_0_q30_420.jpg -q 30 -f 420
 ```
-This command will generate a JPEG image with quality 50 and YUV444 format. 
+This command will generate a JPEG image with quality 30 and YUV420 format. 
 
 ## Preparation for Python users
 **Method 1 (via CMake)**
