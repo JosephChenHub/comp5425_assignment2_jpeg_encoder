@@ -12,6 +12,10 @@ inline int div_up(int a, int b) {
     return (a + b - 1) / b;
 }
 
+
+///
+/// convert RGB image to YUV format, YUV444 means that there is no sub-sampling for U,V channels
+///
 Image<uint8_t> JpegColor::rgbToYUV444(const Image<uint8_t> &rgb) {
     if (rgb.channels() != 3) {
         throw std::runtime_error(" input image's channels != 3 "); 
@@ -19,7 +23,7 @@ Image<uint8_t> JpegColor::rgbToYUV444(const Image<uint8_t> &rgb) {
 
     Image<uint8_t> yuv(rgb);
     /* TODO: implement color transform here : RGB -> YUV ,
-     * Image class API ref.:  
+     * Image class (see include/image.hpp) API ref.:  
      *  - rows(), cols(), channels()  
      *  - rgb.(y, x, c) -> return pixel at (y, x, c)
      */
@@ -29,6 +33,9 @@ Image<uint8_t> JpegColor::rgbToYUV444(const Image<uint8_t> &rgb) {
     return yuv;
 }
 
+///
+/// sample blocks from a given YUV image
+///
 void JpegColor::sampleToBlocks(const Image<uint8_t> &image, 
                                std::vector<uint8_t> &y_blocks, 
                                std::vector<uint8_t> &u_blocks, 
@@ -38,8 +45,19 @@ void JpegColor::sampleToBlocks(const Image<uint8_t> &image,
                                ) {
     const int w = image.cols();
     const int h = image.rows();
-    int block_nw = div_up(w, block_w);
+    int block_nw = div_up(w, block_w); // make sure cover all pixels
     int block_nh = div_up(h, block_h);
+
+    // sx, sy are sampling factors from horizontal and vertical directions, e.g., for YUV420, the micro block size will be 16*16,
+    // there will be four sequential 8*8 blocks for Y channel; for U, V channel, a micro block (16*16) will be 
+    // down-sampled to a 8*8 block. In this case, sx=2, sy=2, block_w=block_h=16, 
+    // block_stride = 64 refers to the size of a 8*8 block, since we flatten blocks into a one-dimensional vector. 
+    // here N = block_nw * block_nh is the total number of micro blocks (16*16), 
+    // y_blocks will have N * sx * sy blocks (8*8), u_blocks/v_blocks will have N blocks (8*8), 
+    // thus, given a micro block with shape of 16*16, it should output four sequential 8*8 blocks (from left to right, from top to bottom) for Y channel,
+    // one 8*8 block for U channel, one 8*8 block for V channel.
+    // here we store blocks in y_blocks, u_blocks, v_blocks respectively as they will be processed indivisually.
+    // 
     size_t block_stride = int(block_h / sy) * int(block_w / sx); 
     y_blocks.resize(block_stride * block_nw * block_nh * sx * sy);
     u_blocks.resize(block_stride * block_nw * block_nh );
