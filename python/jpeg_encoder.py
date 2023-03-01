@@ -114,21 +114,59 @@ plt.show()
 # In[2]:
 
 
-MBSIZE_W = 8 # size of Micro block
-MBSIZE_H = 8 
+def block_image(img, color_format):
+    """
+       Pad image with zeros if necessary, and divide image into blocks.
+       Be careful about different color_format as it may requires sub-sampling for U/V channels.  
+       @img:  H*W*3, yuv format, 
+       @color_format:  YUVFormat.YUV444, YUV420, YUV422
+       @output: tuples of blocks (Y/U/V)
+    """
 
-def block_image(img, bsize_w, bsize_h):
-    """
-       Pad image with zeros if necessary, and divide image into blocks
-       @input: img -- H*W*3, yuv format
-       @output: tuples of blocks
-    """
-    
+    # specify the macroblock size and sampling factors for different color settings
+    if color_format == YUVFormat.YUV444:
+        block_w = 8
+        block_h = 8
+        sx = 1
+        sy = 1
+    elif color_format == YUVFormat.YUV420:
+        block_w = 16
+        block_h = 16
+        sx = 2
+        sy = 2
+    elif color_format == YUVFormat.YUV422:
+        block_w = 16
+        block_h = 8
+        sx = 2 
+        sy = 1
+    else:
+        raise Exception("unknown color format!") 
+
+    img_h, img_w, _ = img.shape
+    block_nw = (img_w + block_w - 1) // block_w  # cover all pixels. for pixels out of boudary, the sampled block should be filled with 0
+    block_nh = (img_h + block_h - 1) // block_h 
+    N = block_nw * block_nh
+
+    # sx, sy are sampling factors from horizontal and vertical directions, e.g., for YUV420, the macroblock size will be 16*16,
+    # there will be four sequential 8*8 blocks for Y channel; for U, V channel, a macroblock (16*16) will be 
+    # down-sampled to a 8*8 block. In this case, sx=2, sy=2, block_w=block_h=16, 
+    # here N = block_nw * block_nh is the total number of macroblocks (16*16), 
+    # y_blocks will have N * sx * sy blocks (8*8), u_blocks/v_blocks will have N blocks (8*8), 
+    # thus, given a macroblock with shape of 16*16, it should output four sequential 8*8 blocks (from left to right, from top to bottom) for Y channel,
+    # one 8*8 block for U channel, one 8*8 block for V channel.
+    # here we store blocks in y_blocks, u_blocks, v_blocks respectively as they will be processed indivisually.
+
+    y_blocks = np.zeros((N*sx*sy, 8, 8), dtype=np.uint8)
+    u_blocks = np.zeros((N, 8, 8), dtype=np.uint8)
+    v_blocks = np.zeros((N, 8, 8), dtype=np.uint8)
+
+    # TODO: implement the sampling
     raise Exception("TODO: block_image was not implemented")
+
     return (y_blocks, u_blocks, v_blocks)
 
 
-blocks = block_image(img_yuv)
+blocks = block_image(img_yuv, COLOR_FORMAT)
 
 
 y_blocks_num = len(blocks[0])
@@ -377,4 +415,3 @@ jpg_img = read_rgb_image(OUTPUT_NAME)
 
 plt.figure(figsize=(12, 12)) 
 plt.imshow(jpg_img)
-
