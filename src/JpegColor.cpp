@@ -48,13 +48,13 @@ void JpegColor::sampleToBlocks(const Image<uint8_t> &image,
     int block_nw = div_up(w, block_w); // make sure cover all pixels
     int block_nh = div_up(h, block_h);
 
-    // sx, sy are sampling factors from horizontal and vertical directions, e.g., for YUV420, the micro block size will be 16*16,
-    // there will be four sequential 8*8 blocks for Y channel; for U, V channel, a micro block (16*16) will be 
+    // sx, sy are sampling factors from horizontal and vertical directions, e.g., for YUV420, the macroblock size will be 16*16,
+    // there will be four sequential 8*8 blocks for Y channel; for U, V channel, a macroblock (16*16) will be 
     // down-sampled to a 8*8 block. In this case, sx=2, sy=2, block_w=block_h=16, 
     // block_stride = 64 refers to the size of a 8*8 block, since we flatten blocks into a one-dimensional vector. 
-    // here N = block_nw * block_nh is the total number of micro blocks (16*16), 
+    // here N = block_nw * block_nh is the total number of macroblocks (16*16), 
     // y_blocks will have N * sx * sy blocks (8*8), u_blocks/v_blocks will have N blocks (8*8), 
-    // thus, given a micro block with shape of 16*16, it should output four sequential 8*8 blocks (from left to right, from top to bottom) for Y channel,
+    // thus, given a macroblock with shape of 16*16, it should output four sequential 8*8 blocks (from left to right, from top to bottom) for Y channel,
     // one 8*8 block for U channel, one 8*8 block for V channel.
     // here we store blocks in y_blocks, u_blocks, v_blocks respectively as they will be processed indivisually.
     // 
